@@ -1,0 +1,3 @@
+Flask==3.0.3
+Joblib==1.4.2
+Pandas==2.2.2

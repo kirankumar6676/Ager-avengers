@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="text-center text-success">Fertilizer Recommendation System 🌱</h1>
+    <form method="post" action="/fertilizer_predict">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="Nitrogen" class="form-label">Nitrogen</label>
+                <input type="text" id="Nitrogen" name="Nitrogen" placeholder="Enter Nitrogen" class="form-control" required step="0">
+            </div>
+            <div class="col-md-4">
+                <label for="Potassium" class="form-label">Potassium</label>
+                <input type="text" id="Potassium" name="Potassium" placeholder="Enter Potassium" class="form-control" required step="0">
+            </div>
+            <div class="col-md-4">
+                <label for="Phosphorous" class="form-label">Phosphorous</label>
+                <input type="text" id="Phosphorous" name="Phosphorous" placeholder="Enter Phosphorous" class="form-control" required step="0">
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12 text-center">
+                <button type="submit" value="Predict" class="btn btn-primary btn-lg">Get Recommendation</button>
+            </div>
+        </div>
+    </form>
+    {% if result %}
+        <div class="card bg-dark text-white result-card" style="width: 18rem; margin: auto; margin-top: 40px;">
+            <div class="card-body">
+                <h5 class="card-title">Recommended Fertilizer:</h5>
+                <p class="card-text">{{ result }}</p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

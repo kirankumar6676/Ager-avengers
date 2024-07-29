@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="text-center text-success">Crop Recommendation System 🌱</h1>
+    <form id="recommendation-form">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="Nitrogen" class="form-label">Nitrogen</label>
+                <input type="number" id="Nitrogen" name="Nitrogen" class="form-control" placeholder="Enter Nitrogen" required step="0.01">
+            </div>
+            <div class="col-md-6">
+                <label for="Phosphorus" class="form-label">Phosphorus</label>
+                <input type="number" id="Phosphorus" name="Phosphorus" class="form-control" placeholder="Enter Phosphorus" required step="0.01">
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <label for="Potassium" class="form-label">Potassium</label>
+                <input type="number" id="Potassium" name="Potassium" class="form-control" placeholder="Enter Potassium" required step="0.01">
+            </div>
+            <div class="col-md-6">
+                <label for="Temperature" class="form-label">Temperature (°C)</label>
+                <input type="number" id="Temperature" name="Temperature" class="form-control" placeholder="Enter Temperature" required step="0.01">
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <label for="Humidity" class="form-label">Humidity (%)</label>
+                <input type="number" id="Humidity" name="Humidity" class="form-control" placeholder="Enter Humidity" required step="0.01">
+            </div>
+            <div class="col-md-6">
+                <label for="ph" class="form-label">pH</label>
+                <input type="number" id="ph" name="ph" class="form-control" placeholder="Enter pH" required step="0.01">
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <label for="Rainfall" class="form-label">Rainfall (mm)</label>
+                <input type="number" id="Rainfall" name="Rainfall" class="form-control" placeholder="Enter Rainfall" required step="0.01">
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary btn-lg">Get Recommendation</button>
+            </div>
+        </div>
+    </form>
+    <div id="result-container" class="result-card" style="display: none;">
+        <div class="card bg-dark text-white">
+            <div class="card-body text-center">
+                <h5 class="card-title">Recommended Crop for Cultivation:</h5>
+                <p id="result-text" class="card-text"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('recommendation-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            let formData = new FormData(this);
+
+            fetch('/crop_predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.prediction) {
+                    document.getElementById('result-text').textContent = data.prediction;
+                    document.getElementById('result-container').style.display = 'block';
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+    </script>
+{% endblock %}
