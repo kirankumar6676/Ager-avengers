@@ -1,3 +1,1 @@
-.cache/scipy
-.cache/scipy.libs
-.cache/scipy-1.14.0.dist-info
+.cache
