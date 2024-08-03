@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="text-center text-success">Disease Detection System 🦠</h1>
+    <form method="post" action="/predict" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <label for="file" class="form-label">Upload an Image</label>
+                <input type="file" id="file" name="file" accept="image/*" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary btn-lg">Upload and Predict</button>
+            </div>
+        </div>
+    </form>
+
+    {% if result %}
+        <div class="card bg-dark text-white result-card" style="width: 18rem; margin: auto; margin-top: 40px;">
+            <div class="card-body">
+                <h5 class="card-title">Prediction Result:</h5>
+                <p class="card-text">{{ result }}</p>
+            </div>
+        </div>
+
+        {% if prevention_methods %}
+            <div class="card bg-light prevention-card" style="width: 18rem; margin: auto; margin-top: 20px;">
+                <div class="card-body">
+                    <h5 class="card-title">Prevention Methods:</h5>
+                    <ul class="card-text">
+                        {% for method in prevention_methods %}
+                            <li>{{ method }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
